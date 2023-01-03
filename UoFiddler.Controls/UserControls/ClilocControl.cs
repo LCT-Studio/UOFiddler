@@ -57,13 +57,16 @@ namespace UoFiddler.Controls.UserControls
                         _cliloc = new StringList("enu");
                         break;
                     case 1:
-                        _cliloc = new StringList("deu");
+                        _cliloc = new StringList("rus");
                         break;
                     case 2:
+                        _cliloc = new StringList("deu");
+                        break;
+                    case 3:
                         TestCustomLang("cliloc.custom1");
                         _cliloc = new StringList("custom1");
                         break;
-                    case 3:
+                    case 4:
                         TestCustomLang("cliloc.custom2");
                         _cliloc = new StringList("custom2");
                         break;

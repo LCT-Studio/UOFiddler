@@ -54,6 +54,7 @@ namespace UoFiddler.Controls.UserControls
             this.GotoButton = new System.Windows.Forms.ToolStripButton();
             this.FindEntry = new System.Windows.Forms.ToolStripTextBox();
             this.FindButton = new System.Windows.Forms.ToolStripButton();
+            this.RegexToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -61,7 +62,6 @@ namespace UoFiddler.Controls.UserControls
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.cSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RegexToolStripButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -154,6 +154,7 @@ namespace UoFiddler.Controls.UserControls
             // 
             this.LangComboBox.Items.AddRange(new object[] {
             "English",
+            "Russian",
             "German",
             "Custom 1",
             "Custom 2"});
@@ -203,6 +204,15 @@ namespace UoFiddler.Controls.UserControls
             this.FindButton.Size = new System.Drawing.Size(34, 22);
             this.FindButton.Text = "Find";
             this.FindButton.Click += new System.EventHandler(this.FindEntryClick);
+            // 
+            // RegexToolStripButton
+            // 
+            this.RegexToolStripButton.CheckOnClick = true;
+            this.RegexToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.RegexToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RegexToolStripButton.Name = "RegexToolStripButton";
+            this.RegexToolStripButton.Size = new System.Drawing.Size(129, 22);
+            this.RegexToolStripButton.Text = "Use regular expression";
             // 
             // toolStripSeparator2
             // 
@@ -258,15 +268,6 @@ namespace UoFiddler.Controls.UserControls
             this.tileDataToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.tileDataToolStripMenuItem.Text = "TileData";
             this.tileDataToolStripMenuItem.Click += new System.EventHandler(this.TileDataToolStripMenuItem_Click);
-            // 
-            // RegexToolStripButton
-            // 
-            this.RegexToolStripButton.CheckOnClick = true;
-            this.RegexToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.RegexToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RegexToolStripButton.Name = "RegexToolStripButton";
-            this.RegexToolStripButton.Size = new System.Drawing.Size(129, 22);
-            this.RegexToolStripButton.Text = "Use regular expression";
             // 
             // ClilocControl
             // 

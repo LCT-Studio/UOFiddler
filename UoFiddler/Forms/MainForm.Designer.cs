@@ -1028,7 +1028,7 @@ namespace UoFiddler.Forms
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "MainForm";
-            this.Text = "UOFiddler";
+            this.Text = "UOFiddler (for animation creators)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.TabPanel.ResumeLayout(false);
             this.contextMenuStripMainForm.ResumeLayout(false);

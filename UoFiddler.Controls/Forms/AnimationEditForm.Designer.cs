@@ -101,7 +101,13 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.DrawReferencialPointToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.AnimationPictureBox = new System.Windows.Forms.PictureBox();
             this.EditSidePanel = new System.Windows.Forms.Panel();
+            this.PlayerAnimBox = new System.Windows.Forms.GroupBox();
+            this.SaveScreenButton = new System.Windows.Forms.Button();
+            this.m_BodyMounted = new System.Windows.Forms.CheckBox();
+            this.ChooseBodyComboBox = new System.Windows.Forms.ComboBox();
+            this.ShowBodyButton = new System.Windows.Forms.Button();
             this.FramesGroupBox = new System.Windows.Forms.GroupBox();
             this.FramesTrackBar = new System.Windows.Forms.TrackBar();
             this.SpeedGroupBox = new System.Windows.Forms.GroupBox();
@@ -134,7 +140,6 @@
             this.ShowOnlyValidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportAllToVDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
-            this.AnimationPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
             this.MainSplitContainer.Panel1.SuspendLayout();
             this.MainSplitContainer.Panel2.SuspendLayout();
@@ -156,7 +161,9 @@
             this.AnimationEditPage.SuspendLayout();
             this.AnimationTableLayoutPanel.SuspendLayout();
             this.AnimationEditToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AnimationPictureBox)).BeginInit();
             this.EditSidePanel.SuspendLayout();
+            this.PlayerAnimBox.SuspendLayout();
             this.FramesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FramesTrackBar)).BeginInit();
             this.SpeedGroupBox.SuspendLayout();
@@ -170,7 +177,6 @@
             this.CoordinatesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DirectionTrackBar)).BeginInit();
             this.StatusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AnimationPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // MainSplitContainer
@@ -955,9 +961,22 @@
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
+            // AnimationPictureBox
+            // 
+            this.AnimationPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AnimationPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.AnimationPictureBox.Name = "AnimationPictureBox";
+            this.AnimationPictureBox.Size = new System.Drawing.Size(529, 476);
+            this.AnimationPictureBox.TabIndex = 1;
+            this.AnimationPictureBox.TabStop = false;
+            this.AnimationPictureBox.SizeChanged += new System.EventHandler(this.AnimationPictureBox_OnSizeChanged);
+            this.AnimationPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.AnimationPictureBox_OnPaintFrame);
+            this.AnimationPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AnimationPictureBox_MouseClick);
+            // 
             // EditSidePanel
             // 
             this.EditSidePanel.BackColor = System.Drawing.SystemColors.Control;
+            this.EditSidePanel.Controls.Add(this.PlayerAnimBox);
             this.EditSidePanel.Controls.Add(this.FramesGroupBox);
             this.EditSidePanel.Controls.Add(this.SpeedGroupBox);
             this.EditSidePanel.Controls.Add(this.LocationCenterGroupBox);
@@ -968,6 +987,66 @@
             this.EditSidePanel.Name = "EditSidePanel";
             this.EditSidePanel.Size = new System.Drawing.Size(164, 476);
             this.EditSidePanel.TabIndex = 0;
+            // 
+            // PlayerAnimBox
+            // 
+            this.PlayerAnimBox.Controls.Add(this.SaveScreenButton);
+            this.PlayerAnimBox.Controls.Add(this.m_BodyMounted);
+            this.PlayerAnimBox.Controls.Add(this.ChooseBodyComboBox);
+            this.PlayerAnimBox.Controls.Add(this.ShowBodyButton);
+            this.PlayerAnimBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PlayerAnimBox.Location = new System.Drawing.Point(0, 379);
+            this.PlayerAnimBox.Name = "PlayerAnimBox";
+            this.PlayerAnimBox.Size = new System.Drawing.Size(164, 77);
+            this.PlayerAnimBox.TabIndex = 24;
+            this.PlayerAnimBox.TabStop = false;
+            this.PlayerAnimBox.Text = "Human body control";
+            // 
+            // SaveScreenButton
+            // 
+            this.SaveScreenButton.Location = new System.Drawing.Point(86, 45);
+            this.SaveScreenButton.Name = "SaveScreenButton";
+            this.SaveScreenButton.Size = new System.Drawing.Size(62, 23);
+            this.SaveScreenButton.TabIndex = 19;
+            this.SaveScreenButton.Text = "Save Screen";
+            this.SaveScreenButton.UseVisualStyleBackColor = true;
+            this.SaveScreenButton.Click += new System.EventHandler(this.SaveScreenButton_Click);
+            // 
+            // m_BodyMounted
+            // 
+            this.m_BodyMounted.AutoSize = true;
+            this.m_BodyMounted.Location = new System.Drawing.Point(11, 45);
+            this.m_BodyMounted.Name = "m_BodyMounted";
+            this.m_BodyMounted.Size = new System.Drawing.Size(68, 17);
+            this.m_BodyMounted.TabIndex = 18;
+            this.m_BodyMounted.Text = "Mounted";
+            this.m_BodyMounted.UseVisualStyleBackColor = true;
+            // 
+            // ChooseBodyComboBox
+            // 
+            this.ChooseBodyComboBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ChooseBodyComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ChooseBodyComboBox.ForeColor = System.Drawing.Color.Black;
+            this.ChooseBodyComboBox.FormattingEnabled = true;
+            this.ChooseBodyComboBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.ChooseBodyComboBox.Items.AddRange(new object[] {
+            "Man",
+            "Woman"});
+            this.ChooseBodyComboBox.Location = new System.Drawing.Point(11, 18);
+            this.ChooseBodyComboBox.MaxDropDownItems = 2;
+            this.ChooseBodyComboBox.Name = "ChooseBodyComboBox";
+            this.ChooseBodyComboBox.Size = new System.Drawing.Size(60, 21);
+            this.ChooseBodyComboBox.TabIndex = 17;
+            // 
+            // ShowBodyButton
+            // 
+            this.ShowBodyButton.Location = new System.Drawing.Point(85, 18);
+            this.ShowBodyButton.Name = "ShowBodyButton";
+            this.ShowBodyButton.Size = new System.Drawing.Size(63, 21);
+            this.ShowBodyButton.TabIndex = 16;
+            this.ShowBodyButton.Text = "Show";
+            this.ShowBodyButton.UseVisualStyleBackColor = true;
+            this.ShowBodyButton.Click += new System.EventHandler(this.ShowBodyButton_Click);
             // 
             // FramesGroupBox
             // 
@@ -1345,18 +1424,6 @@
             // 
             this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
-            // AnimationPictureBox
-            // 
-            this.AnimationPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AnimationPictureBox.Location = new System.Drawing.Point(3, 3);
-            this.AnimationPictureBox.Name = "AnimationPictureBox";
-            this.AnimationPictureBox.Size = new System.Drawing.Size(529, 476);
-            this.AnimationPictureBox.TabIndex = 1;
-            this.AnimationPictureBox.TabStop = false;
-            this.AnimationPictureBox.SizeChanged += new System.EventHandler(this.AnimationPictureBox_OnSizeChanged);
-            this.AnimationPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.AnimationPictureBox_OnPaintFrame);
-            this.AnimationPictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AnimationPictureBox_MouseClick);
-            // 
             // AnimationEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1367,7 +1434,7 @@
             this.MinimumSize = new System.Drawing.Size(940, 510);
             this.Name = "AnimationEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Animation Edit - By Soulblighter";
+            this.Text = "Animation Edit - By Soulblighter & LCT-Studio";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationEdit_FormClosing);
             this.Load += new System.EventHandler(this.OnLoad);
             this.MainSplitContainer.Panel1.ResumeLayout(false);
@@ -1397,7 +1464,10 @@
             this.AnimationTableLayoutPanel.PerformLayout();
             this.AnimationEditToolStrip.ResumeLayout(false);
             this.AnimationEditToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AnimationPictureBox)).EndInit();
             this.EditSidePanel.ResumeLayout(false);
+            this.PlayerAnimBox.ResumeLayout(false);
+            this.PlayerAnimBox.PerformLayout();
             this.FramesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FramesTrackBar)).EndInit();
             this.SpeedGroupBox.ResumeLayout(false);
@@ -1415,7 +1485,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.DirectionTrackBar)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AnimationPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1527,5 +1596,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.GroupBox FramesGroupBox;
         private System.Windows.Forms.PictureBox AnimationPictureBox;
+        private System.Windows.Forms.GroupBox PlayerAnimBox;
+        private System.Windows.Forms.Button ShowBodyButton;
+        private System.Windows.Forms.ComboBox ChooseBodyComboBox;
+        private System.Windows.Forms.CheckBox m_BodyMounted;
+        private System.Windows.Forms.Button SaveScreenButton;
     }
 }

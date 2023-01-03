@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Ultima;
@@ -43,6 +44,9 @@ namespace UoFiddler.Controls.Forms
         private static readonly SolidBrush _whiteUnDrawTransparent = new SolidBrush(Color.FromArgb(0, 255, 255, 255));
         private static readonly SolidBrush _whiteUnDrawOpaque = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
         private static SolidBrush _whiteUnDraw = _whiteUnDrawOpaque;
+        private static AnimIdx m_PlayerBody;
+        private static Bitmap[] manBodyBits;
+        private static bool manBodyShow = false;
 
         public AnimationEditForm()
         {
@@ -413,6 +417,69 @@ namespace UoFiddler.Controls.Forms
 
             Bitmap[] currentBits = edit.GetFrames();
 
+            if (manBodyShow)
+            {
+                if (m_BodyMounted.Checked) // Mountded animation
+                {
+                    int bodyAction = 0;
+                    if (_currentBody >= 200 && _currentBody < 400)
+                    {
+                        switch (_currentAction)
+                        {
+                            case 0: //Walk
+                                bodyAction = 23;
+                                break;
+                            case 1: //Run
+                                bodyAction = 24;
+                                break;
+                            case 2: //Idle
+                                bodyAction = 23;
+                                break;
+                            case 3: //Eat
+                                bodyAction = 23;
+                                break;
+                            case 4: //Alert
+                                bodyAction = 23;
+                                break;
+                            case 5: //Attack 1
+                                bodyAction = 26;
+                                break;
+                            case 6: //Attack 2
+                                bodyAction = 27;
+                                break;
+                            case 7: //Get hit
+                            case 8: //Die
+                            case 9: //Idle
+                            case 10: //Fidget
+                            case 11: //LideDown
+                            case 12: //Die 2
+                                break;
+                            default:
+                                bodyAction = 23;
+                                break;
+                        }
+                    }
+                    
+                    if (ChooseBodyComboBox.SelectedIndex == 0) // Not woman
+                    {
+                        m_PlayerBody = AnimationEdit.GetAnimation(1, 400, bodyAction, _currentDir);
+                    }
+                    else
+                    {
+                        m_PlayerBody = AnimationEdit.GetAnimation(1, 401, bodyAction, _currentDir);
+                    }
+                }
+                else
+                {
+                    if (ChooseBodyComboBox.SelectedIndex != 1) // Not woman
+                        m_PlayerBody = AnimationEdit.GetAnimation(1, 400, _currentAction, _currentDir);
+                    else
+                        m_PlayerBody = AnimationEdit.GetAnimation(1, 401, _currentAction, _currentDir);
+                }
+
+                manBodyBits = m_PlayerBody.GetFrames();
+            }
+
             e.Graphics.Clear(Color.LightGray);
             e.Graphics.DrawLine(Pens.Black, new Point(_framePoint.X, 0), new Point(_framePoint.X, AnimationPictureBox.Height));
             e.Graphics.DrawLine(Pens.Black, new Point(0, _framePoint.Y), new Point(AnimationPictureBox.Width, _framePoint.Y));
@@ -453,8 +520,30 @@ namespace UoFiddler.Controls.Forms
                     e.Graphics.FillRectangle(whiteTransparent, new Rectangle(x, y, varFw, varFh));
                 }
 
-                e.Graphics.DrawRectangle(Pens.Red, new Rectangle(x, y, varW, varH));
-                e.Graphics.DrawImage(currentBits[FramesTrackBar.Value], x, y);
+                if (manBodyShow && !m_BodyMounted.Checked) //Show man body
+                {
+                    int m_x = _framePoint.X - m_PlayerBody.Frames[FramesTrackBar.Value].Center.X;
+                    int m_y = _framePoint.Y - m_PlayerBody.Frames[FramesTrackBar.Value].Center.Y - manBodyBits[FramesTrackBar.Value].Height;
+                    e.Graphics.DrawImage(manBodyBits[FramesTrackBar.Value], m_x, m_y);
+
+                    e.Graphics.DrawRectangle(Pens.Red, new Rectangle(x, y, varW, varH));
+                    e.Graphics.DrawImage(currentBits[FramesTrackBar.Value], x, y);
+                }
+                else if (manBodyShow && m_BodyMounted.Checked)
+                {
+                    e.Graphics.DrawRectangle(Pens.Red, new Rectangle(x, y, varW, varH));
+                    e.Graphics.DrawImage(currentBits[FramesTrackBar.Value], x, y);
+
+                    int m_x = _framePoint.X - m_PlayerBody.Frames[FramesTrackBar.Value].Center.X;
+                    int m_y = _framePoint.Y - m_PlayerBody.Frames[FramesTrackBar.Value].Center.Y - manBodyBits[FramesTrackBar.Value].Height;
+                    e.Graphics.DrawImage(manBodyBits[FramesTrackBar.Value], m_x, m_y);
+                }
+                else
+                {
+                    e.Graphics.DrawRectangle(Pens.Red, new Rectangle(x, y, varW, varH));
+                    e.Graphics.DrawImage(currentBits[FramesTrackBar.Value], x, y);
+                }
+                
 
                 //e.Graphics.DrawLine(Pens.Red, new Point(0, 335-(int)numericUpDown1.Value), new Point(animationPictureBox.Width, 335-(int)numericUpDown1.Value));
             }
@@ -604,7 +693,8 @@ namespace UoFiddler.Controls.Forms
                             string file = Path.Combine(path, filename);
                             using (Bitmap bit = new Bitmap(bits[j]))
                             {
-                                bit.Save(file, format);
+                                if (bit != null)
+                                    bit.Save(file, format);
                             }
                         }
                     }
@@ -627,7 +717,8 @@ namespace UoFiddler.Controls.Forms
                         string file = Path.Combine(path, filename);
                         using (Bitmap bit = new Bitmap(bits[j]))
                         {
-                            bit.Save(file, format);
+                            if (bit != null)
+                                bit.Save(file, format);
                         }
                     }
                 }
@@ -4062,5 +4153,45 @@ namespace UoFiddler.Controls.Forms
                 }
             }
         }
+
+        private void ShowBodyButton_Click(object sender, EventArgs e)
+        {
+            if (ShowBodyButton.Text == "Show")
+            {
+                manBodyShow = true;
+                ShowBodyButton.Text = "Hide";
+                AnimationPictureBox.Invalidate();
+            }
+            else
+            {
+                ShowBodyButton.Text = "Show";
+                manBodyShow = false;
+                AnimationPictureBox.Invalidate();
+            }
+        }
+
+        private void SaveScreenButton_Click(object sender, EventArgs e)
+        {
+
+            Bitmap bitmap = new Bitmap(AnimationPictureBox.Width, AnimationPictureBox.Height);
+            AnimationPictureBox.DrawToBitmap(bitmap, AnimationPictureBox.ClientRectangle);
+            
+            try
+            {
+                string mess = Options.OutputPath.ToString() + "MobileFrame_" + _currentBody.ToString() + "_" + _currentAction.ToString() + "_" + _currentDir.ToString() + ".tiff";
+                MessageBox.Show(mess);
+
+                bitmap.Save(Options.OutputPath + "MobileFrame_" + _currentBody.ToString() + "_" + _currentAction.ToString() + "_" + _currentDir.ToString() + ".tiff", ImageFormat.Tiff);
+
+            }
+            catch (Exception ex) 
+            {
+                string mess = ex.Message;
+                
+                MessageBox.Show(mess);
+            }    
+
+        }
+
     }
 }

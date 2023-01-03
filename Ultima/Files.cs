@@ -58,6 +58,7 @@ namespace Ultima
             "cliloc.custom2",
             "cliloc.deu",
             "cliloc.enu",
+            "cliloc.rus",
             "equipconv.def",
             "facet00.mul",
             "facet01.mul",

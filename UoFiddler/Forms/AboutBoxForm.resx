@@ -118,7 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Version 4.9.17
+    <value>Animation creators version
+- Added the ability to use a male and female body.
+- Added the ability to use rider animation.
+- Added saving combined image.
+- Added the ability to edit Clicoc.rus
+
+Version 4.9.17
 - Updated client window enumeration logic to look for alternative clients first to fix Client.SendText() on OrionUO client.
 
 Version 4.9.16
